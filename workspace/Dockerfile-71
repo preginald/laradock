@@ -157,6 +157,23 @@ RUN if [ ${INSTALL_XDEBUG} = false -a ${INSTALL_BLACKFIRE} = true ]; then \
     apt-get install blackfire-agent \
 ;fi
 
+
+#####################################
+# zsh:
+#####################################
+ARG INSTALL_WORKSPACE_ZSH=false
+ENV INSTALL_WORKSPACE_ZSH ${INSTALL_WORKSPACE_ZSH}
+
+USER laradock
+COPY ./ohmyzsh.sh /home/laradock/ohmyzsh.sh
+
+USER root
+RUN if [ ${INSTALL_WORKSPACE_ZSH} = true ]; then \
+    apt-get update -yqq && \
+    apt-get install zsh curl && \
+    /home/laradock/ohmyzsh.sh \
+;fi
+
 #####################################
 # ssh:
 #####################################
